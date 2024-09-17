@@ -1,5 +1,4 @@
-import axios from 'axios';
-import type { AxiosResponse } from 'axios';
+import { get } from '@/utils/axiosInstance';
 
 /**
  * 请求的入参接口
@@ -54,13 +53,11 @@ export interface LoginResponse {
  */
 export const login = async (params: LoginRequest): Promise<BaseResponse<LoginResponse>> => {
   try {
-    const response: AxiosResponse<BaseResponse<LoginResponse>> = await axios.get('/api/Login/JWTToken3.0', {
-      params: {
-        name: params.name,
-        pass: params.pass,
-      },
+    const response = await get<BaseResponse<LoginResponse>>('/api/Login/JWTToken3.0', {
+      name: params.name,
+      pass: params.pass,
     });
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error('请求失败');
   }
