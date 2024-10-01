@@ -35,12 +35,16 @@ import { useRouter } from "vue-router";
 import { ElNotification, ElMessage } from "element-plus";
 import { CircleClose, UserFilled } from "@element-plus/icons-vue";
 import type { ElForm } from "element-plus";
-import { login } from '@/api/loginApi';
+import { login, userInfo } from '@/api/loginApi';
 import type { LoginRequest, BaseResponse, LoginResponse } from '@/api/loginApi';
 import { useAuthStore } from '@/stores/auth';
+import { useUserInfoStore } from '@/stores/userInfo';
+
+import { initDynamicRouter } from '@/router/modules/dynamicRouter';
 
 const router = useRouter();
 const authStore = useAuthStore();
+const userInfoStore = useUserInfoStore();
 const loginForm = ref<LoginRequest>({
   name: '',
   pass: '',
@@ -67,6 +71,13 @@ const loginModule = (formEl: FormInstance | undefined) => {
       if (response.success) {
         // 保存 token 到 Pinia
         authStore.setToken(response.response.token);
+
+        const userInfoRes: BaseResponse<User.UserResponse> = await userInfo();
+        userInfoStore.setUser(userInfoRes.response);
+
+        const menuReq: Menu.MenuRequest = { uid: userInfoRes.response.uID };
+        // 2.添加动态路由
+        await initDynamicRouter(menuReq);
 
         ElNotification({
           title: '首页',

@@ -1,4 +1,5 @@
 import { get } from '@/utils/axiosInstance';
+import { useAuthStore } from "@/stores/auth";
 
 /**
  * 请求的入参接口
@@ -44,6 +45,7 @@ export interface LoginResponse {
   token_type: string;
 }
 
+
 /**
  * 发起登录请求
  * @function login
@@ -61,4 +63,34 @@ export const login = async (params: LoginRequest): Promise<BaseResponse<LoginRes
   } catch (error) {
     throw new Error('请求失败');
   }
+};
+
+export const userInfo = async (): Promise<BaseResponse<User.UserResponse>> => {
+  try {
+    const userStore = useAuthStore();
+    const response = await get<BaseResponse<User.UserResponse>>('/api/user/getInfoByToken', {
+      token: userStore.token,
+    });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
+
+
+// 获取菜单列表
+export const getAuthMenuListApi = async (params: Menu.MenuRequest): Promise<BaseResponse<Menu.MenuOptions>> => {
+  try {
+    const response = await get<BaseResponse<Menu.MenuOptions>>('/api/permission/GetNavigationBar', {
+      uid: params.uid,
+    });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
+
+// 获取按钮权限
+export const getAuthButtonListApi = () => {
+  return [];
 };
