@@ -19,6 +19,7 @@ declare namespace Menu {
     requireAuth: boolean;
     NoTabPage: boolean;
     keepAlive: boolean;
+    isLink: string | null;
   }
   export interface MenuRequest {
     uid: string;
@@ -52,3 +53,12 @@ declare namespace User {
     RIDs: string[];
   }
 }
+
+/* Generic Tools */
+type ObjToKeyValUnion<T> = {
+  [K in keyof T]: { key: K; value: T[K] };
+}[keyof T];
+
+type ObjToKeyValArray<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T];

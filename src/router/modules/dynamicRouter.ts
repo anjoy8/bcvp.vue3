@@ -38,7 +38,11 @@ export const initDynamicRouter = async (params: Menu.MenuRequest) => {
     authStore.flatMenuListGet.forEach(item => {
       item.children && delete item.children;
       if (!item.IsButton && item.path && typeof item.path == "string" && item.path != ' ' && item.path != '-') {
-        item.component = modules["/src/views" + item.path + ".vue"];
+        if (item.path == '/') {
+          item.component = modules["/src/views/home/index.vue"];
+        } else {
+          item.component = modules["/src/views" + item.path + ".vue"];
+        }
         router.addRoute("layout", item as unknown as RouteRecordRaw);
       }
     });

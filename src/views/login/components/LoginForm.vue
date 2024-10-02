@@ -86,7 +86,7 @@ const loginModule = (formEl: FormInstance | undefined) => {
           duration: 3000
         });
 
-        router.push({ name: 'about' });
+        router.push('/');
       } else {
         // 登录失败，显示错误信息
         ElMessage.error(response.msg || "请求失败！请您稍后重试");;

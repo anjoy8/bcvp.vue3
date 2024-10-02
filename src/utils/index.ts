@@ -18,7 +18,7 @@ export function getShowMenuList(menuList: Menu.MenuOptions[]) {
   let newMenuList: Menu.MenuOptions[] = JSON.parse(JSON.stringify(menuList));
   return newMenuList.filter(item => {
     item.children?.length && (item.children = getShowMenuList(item.children));
-    return !item.IsHide;
+    return !item.IsButton;
   });
 }
 
