@@ -17,7 +17,8 @@
     </el-aside>
     <el-container>
       <el-header>
-        <div>ToolBarLeft</div>
+        <ToolBarLeft />
+
 
         <div>ToolBarRight</div>
 
@@ -34,6 +35,7 @@ import { useAuthMenuStore } from "@/stores/modules/authMenu";
 import Main from "@/layouts/components/Main/index.vue";
 import SubMenu from "@/layouts/components/Menu/SubMenu.vue";
 import { useGlobalStore } from "@/stores/modules/global";
+import ToolBarLeft from "@/layouts/components/Header/ToolBarLeft.vue";
 
 const title = 'BlogVue3';
 

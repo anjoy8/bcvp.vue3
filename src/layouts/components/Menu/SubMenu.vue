@@ -3,7 +3,7 @@
     <el-sub-menu v-if="subItem.children?.length" :index="subItem.name">
       <template #title>
         <el-icon>
-          <component :is="'HomeFilled'"></component>
+          <component :is="subItem.meta.icon ? subItem.meta.icon : 'HomeFilled'"></component>
         </el-icon>
         <span class="sle">{{ subItem.meta.title }}</span>
       </template>
@@ -11,7 +11,7 @@
     </el-sub-menu>
     <el-menu-item v-else :index="subItem.path" @click="handleClickMenu(subItem)">
       <el-icon>
-        <component :is="'Menu'"></component>
+        <component :is="subItem.meta.icon ? subItem.meta.icon : 'Menu'"></component>
       </el-icon>
       <template #title>
         <span class="sle">{{ subItem.meta.title }}</span>
@@ -33,6 +33,24 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 </script>
 
 <style lang="scss">
+/* flex */
+.flx-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flx-justify-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flx-align-center {
+  display: flex;
+  align-items: center;
+}
+
 .el-sub-menu .el-sub-menu__title:hover {
   color: var(--el-menu-hover-text-color) !important;
   background-color: transparent !important;

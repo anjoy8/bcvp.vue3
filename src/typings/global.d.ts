@@ -20,6 +20,7 @@ declare namespace Menu {
     NoTabPage: boolean;
     keepAlive: boolean;
     isLink: string | null;
+    icon: string | null;
   }
   export interface MenuRequest {
     uid: string;
