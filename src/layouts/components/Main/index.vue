@@ -1,5 +1,5 @@
 <template>
-  <div>tabs</div>
+  <Tabs v-if="tabs"/>
   <el-main>
     <router-view v-slot="{ Component, route }">
       <transition appear name="fade-transform" mode="out-in">
@@ -20,6 +20,7 @@ import { storeToRefs } from "pinia";
 import { useDebounceFn } from "@vueuse/core";
 import { useKeepAliveStore } from "@/stores/modules/keepAlive";
 import { useGlobalStore } from "@/stores/modules/global";
+import Tabs from "@/layouts/components/Tabs/index.vue";
 
 const globalStore = useGlobalStore();
 const { maximize, isCollapse, layout, tabs, footer } = storeToRefs(globalStore);

@@ -1,8 +1,11 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+
+import "@/assets/iconfont/iconfont.scss";
 
 // element css
 import "element-plus/dist/index.css";
+// custom element css
+import "@/styles/element.scss";
 // element dark css
 import "element-plus/theme-chalk/dark/css-vars.css";
 // element plus
@@ -12,6 +15,7 @@ import * as Icons from "@element-plus/icons-vue";
 
 import App from './App.vue'
 import router from './router'
+import pinia from "@/stores";
 
 const app = createApp(App)
 
@@ -21,7 +25,7 @@ Object.keys(Icons).forEach(key => {
 });
 
 app.use(ElementPlus)
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')
