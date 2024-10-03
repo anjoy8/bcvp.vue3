@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import piniaPersistConfig from "@/stores/config/piniaPersist";
 
 export const useUserInfoStore = defineStore({
   id: 'userinfo',
@@ -8,17 +9,11 @@ export const useUserInfoStore = defineStore({
   actions: {
     setUser(user: User.UserResponse) {
       this.user = user;
-      localStorage.setItem('userinfo', JSON.stringify(user));
-    },
-    getUser() {
-      const user = localStorage.getItem('userinfo');
-      if (user) {
-        this.user = JSON.parse(user);
-      }
     },
     clearUser() {
       this.user = null;
       localStorage.removeItem('userinfo');
     }
-  }
+  },
+  persist: piniaPersistConfig("userinfo")
 });

@@ -18,10 +18,7 @@
     <el-container>
       <el-header>
         <ToolBarLeft />
-
-
-        <div>ToolBarRight</div>
-
+        <ToolBarRight />
       </el-header>
       <Main />
     </el-container>
@@ -36,6 +33,7 @@ import Main from "@/layouts/components/Main/index.vue";
 import SubMenu from "@/layouts/components/Menu/SubMenu.vue";
 import { useGlobalStore } from "@/stores/modules/global";
 import ToolBarLeft from "@/layouts/components/Header/ToolBarLeft.vue";
+import ToolBarRight from "@/layouts/components/Header/ToolBarRight.vue";
 
 const title = 'BlogVue3';
 
