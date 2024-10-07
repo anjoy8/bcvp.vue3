@@ -1,5 +1,5 @@
 <template>
-  <Tabs v-if="tabs"/>
+  <Tabs v-if="tabs" />
   <el-main>
     <router-view v-slot="{ Component, route }">
       <transition appear name="fade-transform" mode="out-in">
@@ -10,7 +10,7 @@
     </router-view>
   </el-main>
   <el-footer v-if="footer">
-    <div>footer</div>
+    <Footer />
   </el-footer>
 </template>
 
@@ -21,6 +21,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { useKeepAliveStore } from "@/stores/modules/keepAlive";
 import { useGlobalStore } from "@/stores/modules/global";
 import Tabs from "@/layouts/components/Tabs/index.vue";
+import Footer from "@/layouts/components/Footer/index.vue";
 
 const globalStore = useGlobalStore();
 const { maximize, isCollapse, layout, tabs, footer } = storeToRefs(globalStore);

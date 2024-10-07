@@ -1,3 +1,13 @@
+html,
+body,
+#app,
+#watermark {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 /* 设置 notification、message 层级在 loading 之上 */
 .el-message,
 .el-notification {
