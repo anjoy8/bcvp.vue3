@@ -1,6 +1,7 @@
 <template>
   <div class="tool-bar-ri">
     <div class="header-icon">
+      <ThemeSetting id="themeSetting" />
       <Message id="message" />
     </div>
     <span class="username">{{ username }}</span>
@@ -13,6 +14,7 @@ import { computed } from "vue";
 import { useUserInfoStore } from "@/stores/userInfo";
 import Message from "./components/Message.vue";
 import Avatar from "./components/Avatar.vue";
+import ThemeSetting from "./components/ThemeSetting.vue";
 
 const userStore = useUserInfoStore();
 const username = computed(() => userStore.user?.uRealName ?? '管理员');

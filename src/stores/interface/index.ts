@@ -1,4 +1,4 @@
-export type LayoutType = "vertical";
+export type LayoutType = "vertical" | 'transverse';
 
 export type AssemblySizeType = "large" | "default" | "small";
 /* GlobalState */

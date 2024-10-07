@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { GlobalState } from "@/stores/interface";
+import piniaPersistConfig from "@/stores/config/piniaPersist";
 
 export const useGlobalStore = defineStore({
   id: "blogvue3-global",
@@ -44,5 +45,6 @@ export const useGlobalStore = defineStore({
     setGlobalState(...args: ObjToKeyValArray<GlobalState>) {
       this.$patch({ [args[0]]: args[1] });
     }
-  }
+  },
+  persist: piniaPersistConfig("blogvue3-global")
 });
