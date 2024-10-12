@@ -67,3 +67,22 @@ export function findMenuByPath(menuList: Menu.MenuOptions[], path: string): Menu
   }
   return null;
 }
+
+export function getButtonList(routePath: string, routers: Menu.MenuOptions[]): Menu.MenuOptions[] {
+  let buttonList: Menu.MenuOptions[] = [];
+  const findButtons = (path: string, routes: Menu.MenuOptions[]) => {
+    for (let element of routes) {
+      if (path && element.path) {
+        const currentPath = path.toLowerCase();
+        if (element.path && element.path.toLowerCase() === currentPath) {
+          buttonList = element.children || [];
+          return;
+        } else if (element.children) {
+          findButtons(currentPath, element.children);
+        }
+      }
+    }
+  };
+  findButtons(routePath.toLowerCase(), routers);
+  return buttonList;
+}

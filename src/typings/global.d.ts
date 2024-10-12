@@ -11,6 +11,7 @@ declare namespace Menu {
     Func: string | null;
     component?: string | (() => Promise<unknown>);
     iconCls: string;
+    search: string;
     meta: MetaProps;
     children?: MenuOptions[] | null;
   }

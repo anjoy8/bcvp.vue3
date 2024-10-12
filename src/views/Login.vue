@@ -24,7 +24,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { login } from '@/api/loginApi';
 import { useAuthStore } from '@/stores/auth';
-import type { LoginRequest, BaseResponse, LoginResponse } from '@/api/loginApi';
+import type { LoginRequest, LoginResponse } from '@/api/loginApi';
+import type { BaseResponse } from '@/utils/axiosInstance';
 
 const router = useRouter();
 const authStore = useAuthStore();

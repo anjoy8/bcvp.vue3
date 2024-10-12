@@ -1,4 +1,4 @@
-import { get } from '@/utils/axiosInstance';
+import { get, type BaseResponse } from '@/utils/axiosInstance';
 import { useAuthStore } from "@/stores/auth";
 
 /**
@@ -10,24 +10,6 @@ import { useAuthStore } from "@/stores/auth";
 export interface LoginRequest {
   name: string;
   pass: string;
-}
-
-/**
- * 基础响应接口，使用泛型 T 来表示响应体
- * @template T
- * @interface BaseResponse
- * @property {number} status - HTTP 响应状态码
- * @property {boolean} success - 请求是否成功
- * @property {string} msg - 响应的消息
- * @property {string | null} [msgDev] - 开发用的详细信息，可能为空
- * @property {T} response - 具体的响应数据
- */
-export interface BaseResponse<T> {
-  status: number;
-  success: boolean;
-  msg: string;
-  msgDev?: string | null;
-  response: T;
 }
 
 /**

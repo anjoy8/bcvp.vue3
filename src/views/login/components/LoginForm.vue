@@ -36,7 +36,8 @@ import { ElNotification, ElMessage } from "element-plus";
 import { CircleClose, UserFilled } from "@element-plus/icons-vue";
 import type { ElForm } from "element-plus";
 import { login, userInfo } from '@/api/loginApi';
-import type { LoginRequest, BaseResponse, LoginResponse } from '@/api/loginApi';
+import type { LoginRequest, LoginResponse } from '@/api/loginApi';
+import type { BaseResponse } from '@/utils/axiosInstance';
 import { useAuthStore } from '@/stores/auth';
 import { useUserInfoStore } from '@/stores/userInfo';
 
