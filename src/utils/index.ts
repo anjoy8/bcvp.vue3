@@ -86,3 +86,32 @@ export function getButtonList(routePath: string, routers: Menu.MenuOptions[]): M
   findButtons(routePath.toLowerCase(), routers);
   return buttonList;
 }
+
+/**
+ * 格式化日期为指定格式的字符串
+ * @param date - Date 对象或日期字符串
+ * @param format - 目标日期格式，例如：'yyyy-MM-dd' 或 'yyyy年MM月dd日 hh:mm:ss'
+ * @returns 格式化后的日期字符串
+ */
+export function formatDate(date: Date | string, format: string): string {
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
+
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    throw new Error('Invalid date');
+  }
+
+  const padZero = (num: number) => (num < 10 ? '0' : '') + num;
+
+  const replacements: Record<string, string> = {
+    'yyyy': date.getFullYear().toString(),
+    'MM': padZero(date.getMonth() + 1),
+    'dd': padZero(date.getDate()),
+    'hh': padZero(date.getHours()),
+    'mm': padZero(date.getMinutes()),
+    'ss': padZero(date.getSeconds())
+  };
+
+  return format.replace(/yyyy|MM|dd|hh|mm|ss/g, match => replacements[match]);
+}
