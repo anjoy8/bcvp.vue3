@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
+import { ElMessage } from 'element-plus';
 
 
 /**
@@ -73,7 +74,8 @@ axiosInstance.interceptors.response.use(
                 router.push({ name: 'login' });
             } else if (status === 403) {
                 // 无权限访问，提示用户
-                console.error('无权限访问');
+                ElMessage.error('无权限访问');
+                router.push({ name: 'login' });
             } else if (status === 500) {
                 // 服务器错误
                 console.error('服务器错误');
