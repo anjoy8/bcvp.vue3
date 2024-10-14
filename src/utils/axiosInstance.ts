@@ -22,6 +22,24 @@ export interface BaseResponse<T> {
     response: T;
 }
 
+/**
+ * 分页响应基类接口，使用泛型 T 来表示数据列表
+ * @template T
+ * @interface PageModel
+ * @property {number} PageSize - 每页条数
+ * @property {number} dataCount - 数据总条数
+ * @property {number} page - 当前页码
+ * @property {number} pageCount - 总页数
+ * @property {T} data - 具体的响应数据数组
+ */
+export interface PageModel<T> {
+    PageSize: number;
+    dataCount: number;
+    page: number;
+    pageCount: number;
+    data: T[];
+}
+
 // 创建 axios 实例
 const axiosInstance = axios.create({
     baseURL: '',  // 替换为你的 API 基础 URL
