@@ -1,7 +1,7 @@
 // moduleFunctions.ts
 
 import { reactive, toRaw, ref } from 'vue';
-import { getModuleListApi } from '@/api/moduleApi'; // 接口
+import { getModuleListApi, addModule } from '@/api/moduleApi'; // 接口
 import type { ModuleRequest, Module } from '@/api/moduleApi';// 模型类
 import { ElMessage, ElForm, ElMessageBox } from "element-plus";
 import { formatDate } from "@/utils";
@@ -47,15 +47,62 @@ export const handleQuery = async (filters: { name: string }) => {
 
 
 // ↓↓↓↓↓ 新增 ↓↓↓↓↓
-
+export const addForm = reactive<Module>({
+    IsDeleted: false,     // 默认为false表示未删除
+    Name: "",
+    LinkUrl: "",
+    Area: null,           // 可以根据需要初始化为null或其它值
+    Controller: null,
+    Action: null,
+    Icon: null,
+    Code: null,
+    OrderSort: 0,         // 根据你的需求初始化数值
+    Description: null,
+    IsMenu: false,        // 根据需求设置默认值
+    Enabled: true,        // 例如设置为true以允许功能
+    CreateId: "",
+    CreateBy: "",
+    CreateTime: "",
+    ModifyId: null,
+    ModifyBy: null,
+    ModifyTime: "",
+    ParentId: "",         // 初始化为合适的字符串，可能是"0"或"根"
+    Id: ""
+});
 export const handleAdd = async () => {
-    ElMessage.warning('handleAdd');
-
+    addFormVisible.value = true;
+    // 使用引用重置表单
+    if (addFormRef.value) {
+        addFormRef.value.resetFields();
+    }
 };
 
 export const addSubmit = async () => {
-    ElMessage.warning('addSubmit');
+    const formEl = addFormRef.value; // 获取表单实例
+    if (!formEl) return;
 
+    await formEl.validate(async (isValid) => {
+        if (isValid) {
+            addLoading.value = true;
+            const postData = toRaw(addForm);
+            postData.CreateTime = formatDate(new Date(), "yyyy-MM-dd hh:mm:ss");
+            postData.ModifyTime = postData.CreateTime;
+            postData.IsDeleted = false;
+            console.log(postData);
+            const { success, msg } = await addModule(postData);
+            if (success) {
+                ElMessage.success('提交成功');
+                await handleQuery({ name: '' });
+            } else {
+                ElMessage.error('提交失败' + msg);
+            }
+
+            addLoading.value = false;
+            addFormVisible.value = false;
+        } else {
+            ElMessage.error('验证失败，请检查输入项');
+        }
+    });
 };
 
 // ↑↑↑↑↑ 新增 ↑↑↑↑↑

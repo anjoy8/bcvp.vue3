@@ -47,3 +47,13 @@ export const getModuleListApi = async (params: ModuleRequest): Promise<BaseRespo
     throw new Error('请求失败');
   }
 };
+
+// 新增业务数据
+export const addModule = async (params: Module): Promise<BaseResponse<string>> => {
+  try {
+    const response = await post<BaseResponse<string>>('/api/module/post', params);
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
