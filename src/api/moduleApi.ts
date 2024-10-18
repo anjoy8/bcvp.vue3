@@ -57,3 +57,13 @@ export const addModule = async (params: Module): Promise<BaseResponse<string>> =
     throw new Error('请求失败');
   }
 };
+
+// 编辑业务数据
+export const editModule = async (params: Module): Promise<BaseResponse<string>> => {
+  try {
+    const response = await put<BaseResponse<string>>('/api/module/put', params);
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};

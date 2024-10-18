@@ -1,7 +1,7 @@
 // moduleFunctions.ts
 
 import { reactive, toRaw, ref } from 'vue';
-import { getModuleListApi, addModule } from '@/api/moduleApi'; // 接口
+import { getModuleListApi, addModule, editModule } from '@/api/moduleApi'; // 接口
 import type { ModuleRequest, Module } from '@/api/moduleApi';// 模型类
 import { ElMessage, ElForm, ElMessageBox } from "element-plus";
 import { formatDate } from "@/utils";
@@ -109,14 +109,71 @@ export const addSubmit = async () => {
 
 
 // ↓↓↓↓↓ 编辑 ↓↓↓↓↓
-
+export const editForm = reactive<Module>({
+    IsDeleted: false,     // 默认为false表示未删除
+    Name: "",
+    LinkUrl: "",
+    Area: null,           // 可以根据需要初始化为null或其它值
+    Controller: null,
+    Action: null,
+    Icon: null,
+    Code: null,
+    OrderSort: 0,         // 根据你的需求初始化数值
+    Description: null,
+    IsMenu: false,        // 根据需求设置默认值
+    Enabled: true,        // 例如设置为true以允许功能
+    CreateId: "",
+    CreateBy: "",
+    CreateTime: "",
+    ModifyId: null,
+    ModifyBy: null,
+    ModifyTime: "",
+    ParentId: "",         // 初始化为合适的字符串，可能是"0"或"根"
+    Id: ""
+});
 export const handleEdit = async () => {
-    ElMessage.warning('handleEdit');
+    if (!(currentRow.value && currentRow.value?.Id)) {
+        ElMessage.error('请选择要编辑的一行数据！');
+        return;
+    }
 
+    editFormVisible.value = true;
+    editLoading.value = true;
+    if (currentRow.value) {
+        Object.assign(editForm, currentRow.value);
+    }
+    editLoading.value = false;
+    isResouceShow.value++;
 };
 export const editSubmit = async () => {
-    ElMessage.warning('editSubmit');
+    const formEl = editFormRef.value; // 获取表单实例
+    if (!formEl) return;
 
+    await formEl.validate(async (isValid) => {
+        if (isValid) {
+            ElMessageBox.confirm("确认提交吗？", "温馨提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(async () => {
+                const postData = toRaw(editForm);
+                postData.ModifyTime = formatDate(new Date(), "yyyy-MM-dd hh:mm:ss");
+                console.log(postData);
+                const { success, msg } = await editModule(postData);
+                if (success) {
+                    ElMessage.success('提交成功');
+                    await handleQuery({ name: '' });
+                } else {
+                    ElMessage.error('提交失败' + msg);
+                }
+            });
+
+            editFormVisible.value = false;
+
+        } else {
+            ElMessage.error('验证失败，请检查输入项');
+        }
+    });
 };
 
 // ↑↑↑↑↑ 编辑 ↑↑↑↑↑

@@ -53,6 +53,27 @@
 
 
         <!-- 编辑 -->
+        <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+            <el-form :model="editForm" label-width="80px" :rules="addFormRules" ref="editFormRef">
+                <el-form-item label="接口地址" prop="LinkUrl">
+                    <el-input v-model="editForm.LinkUrl" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="接口描述" prop="Name">
+                    <el-input v-model="editForm.Name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="状态" prop="Enabled">
+                    <el-select v-model="editForm.Enabled" placeholder="请选择状态">
+                        <el-option label="激活" :value="true"></el-option>
+                        <el-option label="禁用" :value="false"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click.native="editFormVisible = false">取消</el-button>
+                <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+            </div>
+        </el-dialog>
+
 
     </section>
 </template>
@@ -70,7 +91,7 @@ import { getModuleListApi, type Module, type ModuleRequest } from '@/api/moduleA
 import {
     handleQuery, handleAdd, handleEdit, handleDel, modules, listLoading, isResouceShow,
     page, pageSize, total, addLoading, addFormRef, addSubmit, addFormVisible, addForm,
-    currentRow, editFormVisible, editLoading, editFormRef, editSubmit
+    currentRow, editFormVisible, editLoading, editFormRef, editSubmit, editForm
 } from './moduleFunctions';
 // 定义 filters
 const filters = ref<{ name: string }>({ name: '' });
