@@ -1,7 +1,7 @@
 // moduleFunctions.ts
 
 import { reactive, toRaw, ref } from 'vue';
-import { getModuleListApi, addModule, editModule } from '@/api/moduleApi'; // 接口
+import { getModuleListApi, addModule, editModule, removeModule } from '@/api/moduleApi'; // 接口
 import type { ModuleRequest, Module } from '@/api/moduleApi';// 模型类
 import { ElMessage, ElForm, ElMessageBox } from "element-plus";
 import { formatDate } from "@/utils";
@@ -181,7 +181,22 @@ export const editSubmit = async () => {
 // ↓↓↓↓↓ 删除 ↓↓↓↓↓
 // 删除数据
 export const handleDel = async () => {
-    ElMessage.warning('handleDel');
-
+    if (!(currentRow.value && currentRow.value?.Id)) {
+        ElMessage.error('请选择要删除的一行数据！');
+        return;
+    }
+    ElMessageBox.confirm("确认删除该记录吗？", "温馨提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+    }).then(async () => {
+        const { success, msg } = await removeModule(currentRow.value?.Id || '0');
+        if (success) {
+            ElMessage.success('删除成功');
+            await handleQuery({ name: '' });
+        } else {
+            ElMessage.error('提交失败' + msg);
+        }
+    });
 };
 // ↑↑↑↑↑ 删除 ↑↑↑↑↑

@@ -67,3 +67,13 @@ export const editModule = async (params: Module): Promise<BaseResponse<string>> 
     throw new Error('请求失败');
   }
 };
+
+// 删除业务数据
+export const removeModule = async (id: string): Promise<BaseResponse<string>> => {
+  try {
+    const response = await del<BaseResponse<string>>('/api/module/delete', { id: id });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
