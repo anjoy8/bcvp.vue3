@@ -61,6 +61,16 @@ export interface PermissionNode {
   btns: PermissionNode[] | null; // 按钮列表
 }
 
+
+export interface PermissionByRoleNode {
+  permissionids: string[] | null; // 子节点
+  assignbtns: string[] | null; // 子节点
+}
+export interface AssignRequest {
+  pids: string[] | null; // 子节点
+  rid: string | null; // 子节点
+}
+
 // 获取业务数据列表
 export const getPermissionListApi = async (params: PermissionRequest): Promise<BaseResponse<Permission[]>> => {
   try {
@@ -105,6 +115,34 @@ export const removePermission = async (id: string): Promise<BaseResponse<string>
 export const getPermissionTree = async (pid: string): Promise<BaseResponse<PermissionNode>> => {
   try {
     const response = await get<BaseResponse<PermissionNode>>('/api/permission/getpermissiontree', { pid: pid });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
+
+// 菜单树业务数据
+export const getPermissionTreeNobtn = async (): Promise<BaseResponse<PermissionNode>> => {
+  try {
+    const response = await get<BaseResponse<PermissionNode>>('/api/permission/getpermissiontree', { needbtn: false });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
+
+export const getPermissionIdsApi = async (rid: string): Promise<BaseResponse<PermissionByRoleNode>> => {
+  try {
+    const response = await get<BaseResponse<PermissionByRoleNode>>('/api/permission/GetPermissionIdByRoleId', { rid: rid });
+    return response;
+  } catch (error) {
+    throw new Error('请求失败');
+  }
+};
+
+export const addRolePermission = async (params: AssignRequest): Promise<BaseResponse<string>> => {
+  try {
+    const response = await post<BaseResponse<string>>('/api/permission/Assign', params);
     return response;
   } catch (error) {
     throw new Error('请求失败');
