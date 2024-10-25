@@ -40,6 +40,8 @@ export const initDynamicRouter = async (params: Menu.MenuRequest) => {
       if (!item.IsButton && item.path && typeof item.path == "string" && item.path != ' ' && item.path != '-') {
         if (item.path == '/') {
           item.component = modules["/src/views/home/index.vue"];
+        } else if (item.path.indexOf('/:id')) {
+          item.component = modules["/src/views" + item.path.replace('/:id','') + ".vue"];
         } else {
           item.component = modules["/src/views" + item.path + ".vue"];
         }
