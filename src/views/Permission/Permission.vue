@@ -11,7 +11,7 @@
             <el-table-column type="index" width="80"></el-table-column>
             <el-table-column label="菜单/按钮" width="200">
                 <template #default="{ row }">
-                    <i class="fa" :class="row.Icon"></i>
+                    <i class="fa" :class="row.IconNew"></i>
                     {{ row.Name }}
                 </template>
             </el-table-column>
@@ -144,8 +144,13 @@
                 <el-form-item label="描述" prop="Description">
                     <el-input v-model="editForm.Description" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="Icon" prop="Icon">
-                    <el-input v-model="editForm.Icon" auto-complete="off"></el-input>
+                <el-form-item label="IconNew" prop="IconNew">
+                    <el-icon v-if="editForm.IconNew" :style="{ marginRight: '10px' }">
+                        <component :is="editForm.IconNew"></component>
+                    </el-icon>
+                    <el-input v-model="editForm.IconNew" style="width: calc(100% - 130px);"
+                        auto-complete="off"></el-input>
+                    <el-button @click="showIcons = true" style="width: 100px;" type="primary">选择图标</el-button>
                 </el-form-item>
                 <el-form-item label="状态" prop="Enabled">
                     <el-select v-model="editForm.Enabled" placeholder="请选择状态">
@@ -184,7 +189,7 @@
                             <span style="float: left">{{ item.LinkUrl }}</span>
                             <span style="float: right; color: #8492a6; font-size: 13px">{{
             item.Name
-                                }}</span>
+        }}</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -195,13 +200,23 @@
             </div>
         </el-dialog>
 
-
+        <!-- 图标选择 -->
+        <el-dialog title="选择一个图标" v-model="showIcons">
+            <div class="icon-container">
+                <el-icon v-for="icon in iconList" :key="icon" @click="selectIcon(icon)"
+                    :style="{ cursor: 'pointer', margin: '10px' }">
+                    <component :is="icon"></component>
+                    <div>{{ icon }}</div>
+                </el-icon>
+            </div>
+        </el-dialog>
     </section>
 </template>
 
 <script setup lang="ts" name="permission">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { ElForm, ElTable } from 'element-plus';
+import * as ElementPlusIcons from '@element-plus/icons-vue';
 import Toolbar from "@/components/toolbar.vue";
 import mittBusT from "@/utils/mittBusT";
 import { getButtonList } from "@/utils";
@@ -218,6 +233,17 @@ import {
 const filters = ref<{ name: string }>({ name: '' });
 // 加载按钮
 const buttonList = ref<Menu.MenuOptions[]>([]);
+
+// 定义对话框显示状态
+const showIcons = ref(false);
+
+// 获取所有图标名称
+const iconList = Object.keys(ElementPlusIcons);
+// 方法定义
+const selectIcon = (icon: any) => {
+    editForm.IconNew = icon;
+    showIcons.value = false;
+};
 
 const addFormRules = {
     Name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
@@ -370,4 +396,20 @@ onMounted(async () => {
 onUnmounted(() => {
     mittBusT.off('callFunction', callFunction);
 });
-</script>@/api/permissionApi
+</script>
+<style>
+.icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.icon-container i.el-icon {
+    width: 150px;
+}
+
+.icon-container i.el-icon svg {
+    font-size: 22px;
+}
+</style>

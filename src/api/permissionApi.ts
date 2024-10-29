@@ -24,7 +24,7 @@ export interface Permission {
   IskeepAlive: boolean; // 是否保持活跃
   Func: string | null; // 功能，可能为 null
   OrderSort: number; // 排序
-  Icon: string; // 图标
+  IconNew: string; // 图标
   Description: string; // 描述
   Enabled: boolean; // 是否启用
   CreateId: string; // 创建 ID

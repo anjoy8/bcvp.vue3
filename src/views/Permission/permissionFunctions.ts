@@ -74,7 +74,7 @@ export const addForm = reactive<Permission>({
     IskeepAlive: false,  // 默认不保持活跃
     Func: null,  // 默认没有功能
     OrderSort: 0,  // 默认排序为 0
-    Icon: "",  // 默认图标为空字符串
+    IconNew: "",  // 默认图标为空字符串
     Description: "",  // 默认描述为空字符串
     Enabled: true,  // 默认启用
     CreateId: "",  // 默认创建 ID 为空字符串
@@ -164,7 +164,7 @@ export const editForm = reactive<Permission>({
     IskeepAlive: false,  // 默认不保持活跃
     Func: null,  // 默认没有功能
     OrderSort: 0,  // 默认排序为 0
-    Icon: "",  // 默认图标为空字符串
+    IconNew: "",  // 默认图标为空字符串
     Description: "",  // 默认描述为空字符串
     Enabled: true,  // 默认启用
     CreateId: "",  // 默认创建 ID 为空字符串
