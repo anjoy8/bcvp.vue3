@@ -68,6 +68,10 @@ npm run build
 
 
 *****************************************************
+### 视频教程
+
+https://www.bilibili.com/video/BV1zVSzY3EkE/?spm_id_from=333.1387.homepage.video_card.click
+
 ### 文字教程
 
  
